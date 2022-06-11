@@ -1,53 +1,37 @@
 Vagrant.configure("2") do |config|
     config.vm.box = "ubuntu/bionic64"
     
-    $script = <<-SCRIPT
-    rm -f 50-cloud-init.yaml && netplan apply && \
-    route add default gw 192.168.10.1 && \
-    apt-get update && \
-    apt-get install -y \
-       ca-certificates \
-       curl \
-       gnupg \
-       lsb-release && \
-       swapoff -a && \
-       curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg && \
-       echo \
-          "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-          $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null  && \
-       apt-get update && \
-       apt-get install -y docker-ce=5:19.03.8~3-0~ubuntu-bionic  docker-ce-cli=5:19.03.8~3-0~ubuntu-bionic  containerd.io docker-compose-plugin && \
-       echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list && \
-       curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -   && \
-       apt-get update && \
-       sudo apt-get install -y kubeadm kubelet kubectl 
-  SCRIPT
+    config.vm.define "worker1" do |worker1|
+    config.vm.provider "virtualbox" do |worker1|
+          worker1.memory = 1024
+          worker1.cpus = 2  
+      end
+      worker1.vm.hostname = "worker1"
+      worker1.vm.network "public_network", ip: "192.168.10.126" 
+      worker1.vm.provision "shell",
+        path: "worker.sh"
 
-    config.vm.define "vm2" do |vm2|
-      vm2.vm.network "public_network", ip: "192.168.10.127"  
-    #  vm2.vm.provision "shell",    
-    #      inline: $script
-        
-    end
-
-    config.vm.define "vm3" do |vm3|
-      vm3.vm.hostname = "buzbar"
-      vm3.vm.network "public_network", ip: "192.168.10.126" 
-     # vm3.vm.provision "shell",
-     #    inline: $script
-   
-    end
-
-    config.vm.define "vm1" do |vm1|
-      vm1.vm.hostname = "buzr"
-      ##vm1.vm.provision "shell",    
-      ##    inline: $script
-      
-      vm1.vm.network "public_network", ip: "192.168.10.124"
-    end
-    config.vm.define "vm4" do |vm4|
-      vm4.vm.hostname = "br"
-      vm4.vm.network "public_network", ip: "192.168.10.130"
-    end
+   end
+    config.vm.define "worker2" do |worker2|
+    config.vm.provider "virtualbox" do |worker2|
+          worker2.memory = 1024
+          worker2.cpus = 2  
+      end  
+      worker2.vm.hostname = "worker2"
+      worker2.vm.network "public_network", ip: "192.168.10.124"
+      worker2.vm.provision "shell",
+        path: "worker.sh"
+   end
+  # MASTER será a Control-plane    
+    config.vm.define "master" do |master| 
+ #   config.vm.provider "virtualbox" do |v|
+ #          v.memory = 2048
+ #          v.cpus = 2 
+ #     end
+        master.vm.hostname = "master"   
+        master.vm.network "public_network", ip: "192.168.10.127" 
+        master.vm.provision "shell",    
+           path: "master.sh"
+   end
+    
 end
-
