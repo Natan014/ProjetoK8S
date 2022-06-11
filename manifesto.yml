@@ -18,7 +18,7 @@ spec:
         image: traccar/traccar:latest
         ports:
         - containerPort: 8082
-          targetPort: 80
+          
 
 ---
 # NodePort para o tracking-car
@@ -32,7 +32,7 @@ spec:
     app: tracking-car
   ports:
     - port: 80
-      
+      targetPort: 8082
 #---
 #
 ##rabbitMQ  software de mensagens 
