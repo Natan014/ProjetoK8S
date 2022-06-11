@@ -1,0 +1,71 @@
+# Aplicativo de monitoramento de rastreamento veiculos
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tracking-car
+spec:
+  replicas: 3
+  selector:
+   matchLabels:
+    app: tracking-car
+  template:
+    metadata:
+      labels:
+        app: tracking-car
+    spec:
+      containers:
+      - name: tracking-car
+        image: traccar/traccar:latest
+        ports:
+        - containerPort: 8082
+          targetPort: 80
+
+---
+# NodePort para o tracking-car
+apiVersion: v1
+kind: Service
+metadata:
+  name: tracking-port
+spec:  
+  type: NodePort
+  selector:
+    app: tracking-car
+  ports:
+    - port: 80
+      
+#---
+#
+##rabbitMQ  software de mensagens 
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: rabbitmq
+#spec:
+#  replicas: 3
+#  selector:
+#   matchLabels:
+#    app: rabbitmq
+#  template:
+#    metadata:
+#      labels:
+#        app: rabbitmq
+#    spec:
+#      containers:
+#      - name: rabbitmq
+#        image: rabbitmq:3-management
+#        ports:
+#        - containerPort: 15672
+#---        
+## NodePort para o rabbitMQ 
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: node-cl
+#spec:  
+#  type: NodePort
+#  selector:
+#    app: rabbitmq
+#  ports:
+#    - port: 15672
+#
+#
