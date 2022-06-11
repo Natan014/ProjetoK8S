@@ -7,3 +7,4 @@ Documentação(1).odt
 
 vagrantfile
 cat > te.sh #!/bin/bash < te.sh && echo $(kubeadm token create --print-join-command) >> te.sh
+manifesto.yml
