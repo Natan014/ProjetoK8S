@@ -2,3 +2,8 @@
 Documentação.odt
 .~lock.Documentação.odt#
 join.sh
+ubuntu-bionic-18.04-cloudimg-console.log
+Documentação(1).odt
+
+vagrantfile
+cat > te.sh #!/bin/bash < te.sh && echo $(kubeadm token create --print-join-command) >> te.sh
