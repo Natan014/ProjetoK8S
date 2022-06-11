@@ -3,7 +3,7 @@ Vagrant.configure("2") do |config|
     
     config.vm.define "worker1" do |worker1|
     config.vm.provider "virtualbox" do |worker1|
-          worker1.memory = 1024
+          worker1.memory = 1700
           worker1.cpus = 2  
       end
       worker1.vm.hostname = "worker1"
@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
    end
     config.vm.define "worker2" do |worker2|
     config.vm.provider "virtualbox" do |worker2|
-          worker2.memory = 1024
+          worker2.memory = 1700
           worker2.cpus = 2  
       end  
       worker2.vm.hostname = "worker2"
