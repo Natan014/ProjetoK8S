@@ -6,6 +6,9 @@ conhecimento basico dos principios de  docker, kubernetes.
 
 Ferramentas que usamos aqui são todas Open-source não vai levar a nenhum custo, apenas seu tempo e dedicação.
 
+Fique ligado como está em desevolvimento as aulas estão sempre atualizando melhorias para facilitar seus
+estudos.
+ 
 Bom Estudos!!!
 
 
