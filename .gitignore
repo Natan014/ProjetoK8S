@@ -1,7 +1,8 @@
 .vagrant
 Documentação.odt
-.~lock.Documentação.odt#
+*.odt#
 join.sh
 ubuntu-bionic-18.04-cloudimg-console.log
 Documentação(1).odt
 *.conf
+*.odt
