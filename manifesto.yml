@@ -42,6 +42,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
  name: rabbitmq
+ namespace: makuko
 spec:
  replicas: 3
  selector:
@@ -62,6 +63,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+ namespace: makuko
  name: node-cl
 spec:  
  type: NodePort
