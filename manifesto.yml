@@ -41,7 +41,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
- name: rabbitmq
+ name: jurema-123
  namespace: makuko
 spec:
  replicas: 1
@@ -54,7 +54,7 @@ spec:
        app: rabbitmq
    spec:
      containers:
-     - name: rabbitmq
+     - name: jurema-123
        image: rabbitmq:3-management
        ports:
        - containerPort: 15672
