@@ -1,0 +1,74 @@
+# # Aplicativo de monitoramento de rastreamento veiculos
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: tracking-car
+#   namespace: default
+# spec:
+#   replicas: 1
+#   selector:
+#    matchLabels:
+#     app: tracking-car
+#   template:
+#     metadata:
+#       labels:
+#         app: tracking-car
+#     spec:
+#       containers:
+#       - name: tracking-car
+#         image: traccar/traccar:latest
+#         ports:
+#         - containerPort: 8082
+          
+
+# ---
+# # NodePort para o tracking-car
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: tracking-port
+#   namespace: default
+# spec:  
+#   type: NodePort
+#   selector:
+#     app: tracking-car
+#   ports:
+#     - port: 80
+#       targetPort: 8082
+#---
+#
+#rabbitMQ  software de mensagens 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: jurema-123
+ namespace: makuko
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+   app: rabbitmq
+ template:
+   metadata:
+     labels:
+       app: rabbitmq
+   spec:
+     containers:
+     - name: jurema-123
+       image: rabbitmq:3-management
+       ports:
+       - containerPort: 15672
+---        
+# NodePort para o rabbitMQ 
+apiVersion: v1
+kind: Service
+metadata:
+ namespace: makuko
+ name: node-cl
+spec:  
+ type: NodePort
+ selector:
+   app: rabbitmq
+ ports:
+   - port: 15672
+
